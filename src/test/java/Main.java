@@ -29,7 +29,7 @@ P.S. Jeżeli uznasz za stosowne stworzenie więcej klas niż samą klasę ‘Emp
  */
 
 public class Main {
-    static ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    static ArrayList<Employee> employeeList = new ArrayList<>();
 
     private static Employee enterEmployeeData(int index){
         Scanner scanner = new Scanner(System.in);
@@ -37,74 +37,83 @@ public class Main {
         String employeeFirstName = scanner.nextLine();
         System.out.println("Enter employee " + index + " last name:");
         String employeeLastName = scanner.nextLine();
-        int employeePayment=0;
+        int employeePayment;
         try {
             System.out.println("Enter employee " + index + " payment:");
             employeePayment = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("You entered string, please enter integer value");
             return enterEmployeeData(index);
-
         }
-        Employee employee = new Employee(employeeFirstName, employeeLastName, employeePayment);
-        return employee;
-
+        return new Employee(employeeFirstName, employeeLastName, employeePayment);
     }
 
-    private static int allPaymentsSum(){
+    private static int getAllSalariesSum(){
         int sum=0;
         for (Employee employee:employeeList){
-            sum += employee.getPayment();
+            sum += employee.getSalary();
         }
         return sum;
     }
 
 
-    public static void menu(){
-        int menuChoise = menuContent();
-        selectedMenu(menuChoise);
+    public static void dislpayMenu(){
+        int menuChoise = displayMenuContent();
+        displaySelectedMenu(menuChoise);
     }
 
-    private static int menuContent(){
-        System.out.println();
-        System.out.println("           1 – Print sum of all employees salary");
-        System.out.println();
-        System.out.println("           2 – Display all employees data");
-        System.out.println();
-        System.out.println("           3 – Add new employee");
-        System.out.println();
-        System.out.println("           4 – End program");
-        System.out.println();
-        Scanner scanner = new Scanner(System.in);
-        int menuChoise = scanner.nextInt();
+    private static int displayMenuContent(){
+        System.out.println(
+                            "\n" +
+                            "           1 – Print sum of all employees salary\n" +
+                            "\n" +
+                            "           2 – Display all employees data\n" +
+                            "\n" +
+                            "           3 – Add new employee\n" +
+                            "\n" +
+                            "           4 – End program"+
+                            "\n");
+
+        int menuChoise;
+        try {
+            Scanner scanner = new Scanner(System.in);
+            menuChoise = scanner.nextInt();
+        } catch (Exception e) {
+            System.out.println("Entered value is not an integer. Pleas try again");
+            return displayMenuContent();
+        }
         if(0 < menuChoise && menuChoise <=4) {
             return menuChoise;
         }else{
-            System.out.println("nie ma takiego menu");
-            return(menuContent());
+            System.out.println("You entered wrong value, please try again");
+            return(displayMenuContent());
         }
     }
 
-    public static void selectedMenu(int menuChoise){
+    public static void displaySelectedMenu(int menuChoise){
         switch(menuChoise) {
             case 1:
-                System.out.println("Sum of payments of all employees is " +allPaymentsSum());
-                menu();
+                System.out.println("All salaries sum is " + getAllSalariesSum());
+                dislpayMenu();
                 break;
             case 2:
                 for(Employee employee:employeeList){
-                    String data = employee.getAllData();
-                    System.out.println(data);
+                    System.out.println( employee.getAllData());
                 }
-                menu();
+                dislpayMenu();
                 break;
             case 3:
                 Employee employee = enterEmployeeData(employeeList.size()+1);
                 employeeList.add(employee);
-                menu();
+                dislpayMenu();
                 break;
             case 4:
                 System.out.println("Have a good day!");
+                break;
+            //Nie byłem pewny czy dobrą praktyką jest używać default zawsze, czy w takim momencie można go odpuścić?
+            default:
+                System.out.println("Something is no yes ;)");
+                dislpayMenu();
                 break;
         }
     }
@@ -116,7 +125,7 @@ public class Main {
             Employee employee = enterEmployeeData(i);
             employeeList.add(employee);
         }
-        menu();
+        dislpayMenu();
     }
 
 }

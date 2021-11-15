@@ -2,12 +2,12 @@ public class Employee {
 
     private String firstName;
     private String lastName;
-    private int payment;
+    private int salary;
 
-    public Employee(String firstName, String lastName, int payment) {
+    public Employee(String firstName, String lastName, int salary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.payment = payment;
+        this.salary = salary;
     }
 
     public String getFirstName() {
@@ -26,15 +26,15 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public int getPayment() {
-        return payment;
+    public int getSalary() {
+        return salary;
     }
 
-    public void setPayment(int payment) {
-        this.payment = payment;
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     public String getAllData (){
-        return "Salary for " + firstName + " " +lastName+ " is "+ payment;
+        return "Salary for " + firstName + " " +lastName+ " is "+ salary;
     }
 }
